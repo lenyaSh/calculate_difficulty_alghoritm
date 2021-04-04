@@ -1,0 +1,7 @@
+C:\Users\shiri\Desktop\учеба\ААС\5 задание\bin\Debug\5 задание.exe.config
+C:\Users\shiri\Desktop\учеба\ААС\5 задание\bin\Debug\5 задание.exe
+C:\Users\shiri\Desktop\учеба\ААС\5 задание\bin\Debug\5 задание.pdb
+C:\Users\shiri\Desktop\учеба\ААС\5 задание\obj\Debug\5 задание.csprojAssemblyReference.cache
+C:\Users\shiri\Desktop\учеба\ААС\5 задание\obj\Debug\5 задание.csproj.CoreCompileInputs.cache
+C:\Users\shiri\Desktop\учеба\ААС\5 задание\obj\Debug\5 задание.exe
+C:\Users\shiri\Desktop\учеба\ААС\5 задание\obj\Debug\5 задание.pdb
