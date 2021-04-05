@@ -24,12 +24,12 @@ namespace _5_задание {
             return count_elem;
         }
 
-        static void printData(int count_elem, bool[,] matrix) {
-            Console.WriteLine($"Количество элементов = {count_elem}\nМатрица смежности:");
+        static void printData(bool[,] matrix) {
+            Console.WriteLine($"Количество элементов = {matrix.GetLength(0)}\nМатрица смежности:");
             
-            for (int i = 0; i < count_elem; i++) {
+            for (int i = 0; i < matrix.GetLength(0); i++) {
                 Console.Write("| ");
-                for (int j = 0; j < count_elem; j++) {
+                for (int j = 0; j < matrix.GetLength(1); j++) {
                     int symb = matrix[i, j] == true ? 1 : 0;
                     Console.Write($"{symb} ");
                 }
@@ -38,18 +38,20 @@ namespace _5_задание {
 
         }
 
+        /// <summary>
+        /// Reading boolean matrix from file "input.txt"
+        /// </summary>
+        /// <param name="matrix">boolean matrix</param>
+        /// <returns>counting rows in matrix</returns>
         static int ReadFile(ref bool[,] matrix) {
             using(StreamReader sr = new StreamReader("input.txt")) {
                 int count_elem = int.Parse(sr.ReadLine());
                 matrix = new bool[count_elem, count_elem];
                 for(int i = 0; i < count_elem; i++) {
-                    for(int j = 0; j < count_elem; j++) {
-                        char x = (char)sr.Read();
-                        if (x == (char)32) {
-                            x = (char)sr.Read();
-                        }
-
-                        matrix[i, j] = x == '0' ? false : true;
+                    int j = 0;
+                    foreach (string elem in sr.ReadLine().Split(' ').ToArray()) {
+                        matrix[i, j] = elem == "0";
+                        j++;
                     }
                 }
 
@@ -61,12 +63,18 @@ namespace _5_задание {
             Console.WriteLine("======Задача о правильной раскраске графа======");
             Console.WriteLine("1 - сгенерировать входные данные\n2 - считать из файла input.txt");
             int selected = int.Parse(Console.ReadLine());
-            int count_elem = 0;
             bool[,] matrix = new bool[0, 0];
 
             // инициализация
-            count_elem = selected == 1 ? Generate(ref matrix) : ReadFile(ref matrix);
-            printData(count_elem, matrix);
+            if (selected == 1) Generate(ref matrix);
+            else ReadFile(ref matrix);
+            printData(matrix);
+
+
+            TotallyOverkill subtask1 = new TotallyOverkill();
+            subtask1.Matrix = matrix;
+            object matr = subtask1.CalculateCountColors();
+
 
             Console.ReadLine();
 
