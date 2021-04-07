@@ -7,9 +7,17 @@ using System.Threading.Tasks;
 
 namespace _5_задание {
     class Program {
-        static int Generate(ref bool[,] matrix) {
+
+
+        /// <summary>
+        /// Случайная генерация матрицы
+        /// </summary>
+        /// <param name="matrix"></param>
+        static void Generate(ref bool[,] matrix) {
             Random r = new Random();
-            int count_elem = r.Next(0, 10);
+
+            Console.WriteLine("Введите количество элементов:");
+            int count_elem = int.Parse(Console.ReadLine());
             matrix = new bool[count_elem, count_elem];
 
             for(int i = 0; i < count_elem; i++) {
@@ -21,7 +29,6 @@ namespace _5_задание {
                 }
             }
 
-            return count_elem;
         }
 
         static void printData(bool[,] matrix) {
@@ -39,44 +46,65 @@ namespace _5_задание {
         }
 
         /// <summary>
-        /// Reading boolean matrix from file "input.txt"
+        /// Читает булевую матрицу смежности из файла "input.txt"
         /// </summary>
-        /// <param name="matrix">boolean matrix</param>
-        /// <returns>counting rows in matrix</returns>
-        static int ReadFile(ref bool[,] matrix) {
+        /// <param name="matrix">булевая матрица</param>
+        static void ReadFile(ref bool[,] matrix) {
             using(StreamReader sr = new StreamReader("input.txt")) {
                 int count_elem = int.Parse(sr.ReadLine());
                 matrix = new bool[count_elem, count_elem];
                 for(int i = 0; i < count_elem; i++) {
                     int j = 0;
                     foreach (string elem in sr.ReadLine().Split(' ').ToArray()) {
-                        matrix[i, j] = elem == "0";
+                        matrix[i, j] = elem == "1";
                         j++;
                     }
                 }
 
-                return count_elem;
             }
         }
 
         static void Main() {
-            Console.WriteLine("======Задача о правильной раскраске графа======");
-            Console.WriteLine("1 - сгенерировать входные данные\n2 - считать из файла input.txt");
-            int selected = int.Parse(Console.ReadLine());
-            bool[,] matrix = new bool[0, 0];
+            string answer = "y";
+            while (answer == "y") {
+                Console.WriteLine("======Задача о правильной раскраске графа======");
+                Console.WriteLine("1 - сгенерировать входные данные\n2 - считать из файла input.txt");
+                int selected = int.Parse(Console.ReadLine());
+                bool[,] matrix = new bool[0, 0];
 
-            // инициализация
-            if (selected == 1) Generate(ref matrix);
-            else ReadFile(ref matrix);
-            printData(matrix);
+                // инициализация
+                if (selected == 1) Generate(ref matrix);
+                else ReadFile(ref matrix);
 
+                Console.WriteLine("Нужно ли выводить матрицу? y/n");
+                answer = Console.ReadLine();
+                if (answer == "y") {
+                    printData(matrix);
+                }
 
-            TotallyOverkill subtask1 = new TotallyOverkill();
-            subtask1.Matrix = matrix;
-            object matr = subtask1.CalculateCountColors();
+                Console.WriteLine("======На выбор есть 3 алгоритма======");
+                Console.Write($"1. Полный перебор\n2. Жадный алгоритм\n3. Жадный с оптимизацией\nВведите номер нужного алгоритма:");
+                int number_alg = int.Parse(Console.ReadLine());
 
+                if (number_alg == 1) {
+                    TotallyOverkill subtask1 = new TotallyOverkill();
+                    subtask1.Matrix = matrix;
+                    object matr = subtask1.CalculateCountColors();
+                }
+                else if (number_alg == 2) {
+                    GreedyAlg gr = new GreedyAlg(matrix.GetLength(0), matrix);
+                    gr.GreedyColoring();
+                }
+                else if (number_alg == 3) {
+                    OptGreedy ogr = new OptGreedy();
+                    ogr.CalculateCountColors(matrix.GetLength(0), matrix);
+                }
 
-            Console.ReadLine();
+                Console.WriteLine("Желаете повторить? (y/n)");
+                answer = Console.ReadLine();
+
+                Console.Clear();
+            }
 
         }
     }

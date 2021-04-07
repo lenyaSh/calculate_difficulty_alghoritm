@@ -8,6 +8,11 @@ namespace _5_задание {
     class TotallyOverkill {
         public bool[,] Matrix { get; set; }
         
+
+        /// <summary>
+        /// Считает минимальное кол-во цветов в графе
+        /// </summary>
+        /// <returns>пара номер вершины - номер цветаr</returns>
         public Dictionary<int, int> CalculateCountColors() {
             if (Matrix == null)
                 return null;
@@ -41,13 +46,24 @@ namespace _5_задание {
             return colorsAndVertex;
         }
 
-
+        /// <summary>
+        /// Форматированный вывод
+        /// </summary>
+        /// <param name="c">пара номер вершины - номер цвета</param>
         void print(Dictionary<int,int> c) {
             int max = 0;
-            foreach (KeyValuePair<int,int> elem in c){
+
+            Console.WriteLine("Нужно ли выводить список вершина - цвет? y/n");
+            string answer = Console.ReadLine();
+
+            if (answer == "y")
+                Console.WriteLine("Номер вершины - номер цвета:");
+            foreach (KeyValuePair<int, int> elem in c) {
                 if (elem.Value > max) max = elem.Value;
-                Console.WriteLine($"{elem.Key + 1} - {elem.Value}");
+                if (answer == "y")
+                    Console.WriteLine($"{elem.Key + 1} - {elem.Value}");
             }
+            Console.WriteLine("Кол-во цветов: ");
             Console.WriteLine(max);
         }
     }
