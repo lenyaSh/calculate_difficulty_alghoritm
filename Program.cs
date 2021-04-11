@@ -88,8 +88,8 @@ namespace _5_задание {
 
                 if (number_alg == 1) {
                     TotallyOverkill subtask1 = new TotallyOverkill();
-                    subtask1.Matrix = matrix;
-                    object matr = subtask1.CalculateCountColors();
+                    subtask1.GraphColoring(matrix);
+
                 }
                 else if (number_alg == 2) {
                     GreedyAlg gr = new GreedyAlg(matrix.GetLength(0), matrix);
